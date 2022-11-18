@@ -1,0 +1,68 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmTextDAOParameter" >
+    <insert id="insert">
+        INSERT INTO film_text
+        VALUES(#{film_id}, #{title}, #{description})
+    </insert>
+    <insert id="insert3" parameterType="cn.argentoaskia.beans.FilmTextOrigin2">
+        INSERT INTO film_text
+        VALUES(#{filmTextOrigin2.film_id}, #{filmTextOrigin2.title}, #{filmTextOrigin2.description})
+    </insert>
+    <insert id="insert2">
+       INSERT INTO film_text
+       VALUES(#{id}, #{title}, #{desc})
+    </insert>
+    <update id="update">
+        UPDATE film_text
+        SET film_id = #{param2.film_id},
+            title = #{param2.title},
+            description = #{param2.description}
+        WHERE film_id = #{param1.film_id}
+    </update>
+    <update id="update2">
+        UPDATE film_text
+        SET film_id = #{arg1.film_id},
+            title = #{arg1.title},
+            description = #{arg1.description}
+        WHERE film_id = #{arg0.film_id}
+    </update>
+    <update id="update3">
+        UPDATE film_text
+        SET film_id = #{newObj.film_id},
+            title = #{newObj.title},
+            description = #{newObj.description}
+        WHERE film_id = #{ref.film_id}
+    </update>
+    <update id="update4">
+        UPDATE film_text
+        SET film_id = #{newObj.film_id},
+            title = #{newObj.title},
+            description = #{newObj.description}
+        WHERE film_id = #{ref.id}
+    </update>
+    <delete id="delete">
+        DELETE FROM film_text
+        WHERE film_id = #{id} AND title = #{title} AND description = #{desc}
+    </delete>
+    <delete id="delete2">
+        DELETE FROM film_text
+        WHERE film_id = #{param1} AND title = #{param2} AND description = #{param3}
+    </delete>
+    <delete id="delete3">
+        DELETE FROM film_text
+        WHERE film_id = #{arg0} AND title = #{arg1} AND description = #{arg2}
+    </delete>
+
+    <select id="selectById" resultType="cn.argentoaskia.beans.FilmTextOrigin2">
+        SELECT film_id, title, description
+        FROM film_text
+        WHERE film_id = #{id}
+    </select>
+    <select id="selectByTitle" resultType="cn.argentoaskia.beans.FilmTextOrigin2">
+        SELECT film_id, title, description
+        FROM film_text
+        WHERE title = #{_parameter}
+    </select>
+</mapper>
