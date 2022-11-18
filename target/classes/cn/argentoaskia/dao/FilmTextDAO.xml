@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmTextDAO">
+    <select id="selectAll" resultType="cn.argentoaskia.beans.FilmText">
+        SELECT film_id, title, description
+        FROM film_text
+    </select>
+</mapper>
