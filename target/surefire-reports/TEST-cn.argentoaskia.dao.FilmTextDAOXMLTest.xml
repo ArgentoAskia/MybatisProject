@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="cn.argentoaskia.dao.FilmTextDAOXMLTest" time="1.407" tests="5" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="sun.desktop" value="windows"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.class.path" value="D:\OpenSourceProject\MybatisProject2\mybatis-2-2-mybatis-crud-with-java-xml\target\test-classes;D:\OpenSourceProject\MybatisProject2\mybatis-2-2-mybatis-crud-with-java-xml\target\classes;E:\SDK\MavenRepo\org\mybatis\mybatis\3.5.10\mybatis-3.5.10.jar;E:\SDK\MavenRepo\junit\junit\4.13.2\junit-4.13.2.jar;E:\SDK\MavenRepo\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;E:\SDK\MavenRepo\log4j\log4j\1.2.17\log4j-1.2.17.jar;E:\SDK\MavenRepo\mysql\mysql-connector-java\8.0.29\mysql-connector-java-8.0.29.jar;E:\SDK\MavenRepo\com\google\protobuf\protobuf-java\3.19.4\protobuf-java-3.19.4.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="E:\RTE\JDK\OracleJDK\jdk-8u311\jre\bin"/>
+    <property name="sun.java.command" value="C:\Users\asus\AppData\Local\Temp\surefire9124280986888696150\surefirebooter8803823804996563163.jar C:\Users\asus\AppData\Local\Temp\surefire9124280986888696150 2022-09-10T16-01-52_242-jvmRun1 surefire1920522417244495868tmp surefire_05374730894888895694tmp"/>
+    <property name="surefire.test.class.path" value="D:\OpenSourceProject\MybatisProject2\mybatis-2-2-mybatis-crud-with-java-xml\target\test-classes;D:\OpenSourceProject\MybatisProject2\mybatis-2-2-mybatis-crud-with-java-xml\target\classes;E:\SDK\MavenRepo\org\mybatis\mybatis\3.5.10\mybatis-3.5.10.jar;E:\SDK\MavenRepo\junit\junit\4.13.2\junit-4.13.2.jar;E:\SDK\MavenRepo\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;E:\SDK\MavenRepo\log4j\log4j\1.2.17\log4j-1.2.17.jar;E:\SDK\MavenRepo\mysql\mysql-connector-java\8.0.29\mysql-connector-java-8.0.29.jar;E:\SDK\MavenRepo\com\google\protobuf\protobuf-java\3.19.4\protobuf-java-3.19.4.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\asus"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="E:\RTE\JDK\OracleJDK\jdk-8u311\jre"/>
+    <property name="basedir" value="D:\OpenSourceProject\MybatisProject2\mybatis-2-2-mybatis-crud-with-java-xml"/>
+    <property name="file.separator" value="\"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="C:\Users\asus\AppData\Local\Temp\surefire9124280986888696150\surefirebooter8803823804996563163.jar"/>
+    <property name="sun.boot.class.path" value="E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\resources.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\rt.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\sunrsasign.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\jsse.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\jce.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\charsets.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\jfr.jar;E:\RTE\JDK\OracleJDK\jdk-8u311\jre\classes"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_311-b11"/>
+    <property name="user.name" value="asus"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.endorsed.dirs" value="E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\endorsed"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="E:\SDK\MavenRepo"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\asus\AppData\Local\Temp\"/>
+    <property name="idea.version" value="2020.2.3"/>
+    <property name="java.version" value="1.8.0_311"/>
+    <property name="user.dir" value="D:\OpenSourceProject\MybatisProject2\mybatis-2-2-mybatis-crud-with-java-xml"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="java.library.path" value="E:\RTE\JDK\OracleJDK\jdk-8u311\jre\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;E:\programming\RAD Studio 11\bin;C:\Users\Public\Documents\Embarcadero\Studio\22.0\Bpl;E:\programming\RAD Studio 11\bin64;C:\Users\Public\Documents\Embarcadero\Studio\22.0\Bpl\Win64;E:\DataBase\Oracle11gClient;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;E:\RTE\Git\cmd;E:\RTE\NodeJS\;C:\Program Files\dotnet\;E:\RTE\JDK\OracleJDK\jdk-11.0.13-LTS\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\asus\AppData\Local\Microsoft\WindowsApps;E:\RTE\MinGW\bin;C:\Users\asus\AppData\Roaming\npm;E:\programming\Microsoft VS Code\bin;E:\programming\PyCharm Community Edition 2021.1.3\bin;;E:\RTE\apache-maven-3.8.1\bin;;."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.311-b11"/>
+    <property name="java.ext.dirs" value="E:\RTE\JDK\OracleJDK\jdk-8u311\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="maven.repo.local" value="E:\SDK\MavenRepo"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="eTestFileTextDAOXMLSelectById" classname="cn.argentoaskia.dao.FilmTextDAOXMLTest" time="1.002"/>
+  <testcase name="cTestFileTextDAOXMLUpdate" classname="cn.argentoaskia.dao.FilmTextDAOXMLTest" time="0.042"/>
+  <testcase name="fTestFileTextDAOXMLSelectAll" classname="cn.argentoaskia.dao.FilmTextDAOXMLTest" time="0.335"/>
+  <testcase name="bTestFileTextDAOXMLDelete" classname="cn.argentoaskia.dao.FilmTextDAOXMLTest" time="0"/>
+  <testcase name="dTestFileTextDAOXMLInsert" classname="cn.argentoaskia.dao.FilmTextDAOXMLTest" time="0.001"/>
+</testsuite>
