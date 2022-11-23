@@ -1,0 +1,47 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.EmpDAO" >
+    <!-- mysql version of SQL -->
+    <select id="selectAllWithMySQL" resultType="bean.Emp" databaseId="mysql">
+        SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+        FROM emp
+    </select>
+    <select id="selectByIdWithMySQL" resultType="bean.Emp" databaseId="mysql">
+        SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+        FROM emp
+        WHERE EMPNO = #{empNo}
+    </select>
+    <select id="selectByENameWithMySQL" resultType="bean.Emp" databaseId="mysql">
+        <bind name="likeEname" value="'%' + EName + '%'"/>
+        SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+        FROM emp
+        WHERE ENAME like #{likeEname}
+    </select>
+    <select id="selectByJobWithMySQL" resultType="bean.Emp" databaseId="mysql">
+        SELECT EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, COMM, DEPTNO
+        FROM emp
+        WHERE JOB like CONCAT('%', #{job}, '%')
+    </select>
+
+    <!-- oracle version of SQL -->
+    <select id="selectAllWithOracle" resultType="bean.Emp" databaseId="oracle">
+        SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno
+        FROM emp
+    </select>
+    <select id="selectByIdWithOracle" resultType="bean.Emp" databaseId="oracle">
+        SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno
+        FROM emp
+        WHERE EMPNO = #{empNo}
+    </select>
+    <select id="selectByENameWithOracle" resultType="bean.Emp" databaseId="oracle">
+        SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno
+        FROM emp
+        WHERE ENAME like '%' || #{EName} || '%'
+    </select>
+    <select id="selectByJobWithOracle" resultType="bean.Emp" databaseId="oracle">
+        SELECT empno, ename, job, mgr, hiredate, sal, comm, deptno
+        FROM emp
+        WHERE JOB like '%' || #{job} || '%'
+    </select>
+</mapper>

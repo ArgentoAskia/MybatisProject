@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <environments default="mysql">
+        <environment id="mysql">
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="url" value="jdbc:mysql://localhost:3306/oracledata"/>
+                <property name="username" value="root"/>
+                <property name="password" value="sujiewei"/>
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+            </dataSource>
+        </environment>
+        <environment id="oracle">
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+                <property name="username" value="scott"/>
+                <property name="password" value="sujiewei"/>
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="SQL Server" value="sqlServer"/>
+        <property name="DB2" value="db2"/>
+        <property name="Oracle" value="oracle"/>
+        <property name="MySQL" value="mysql"/>
+        <property name="PostgreSQL" value="postgreSql"/>
+        <property name="Derby" value="derby"/>
+        <property name="HSQL" value="hSqlDatabase"/>
+        <property name="H2" value="h2"/>
+    </databaseIdProvider>
+    <mappers>
+        <!-- 单个DAO的配置方式 -->
+<!--        <mapper resource="cn/argentoaskia/dao/FilmTextDAO3.xml"/>-->
+
+        <!-- 扫描DAO包的形式 -->
+        <mapper resource="dao/EmpDAOMapper.xml"/>
+    </mappers>
+</configuration>
