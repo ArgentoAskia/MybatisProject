@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmTextDAOResultMap">
+    <resultMap id="filmText" type="cn.argentoaskia.beans.FilmTextBean">
+        <id property="filmId" column="film_id"/>
+        <result property="filmTitle" column="title"/>
+        <result property="filmDesc" column="description"/>
+    </resultMap>
+    <select id="selectAll1" resultMap="filmText">
+        SELECT film_id, title, description
+        FROM film_text
+    </select>
+    <select id="selectAll2" resultType="cn.argentoaskia.beans.FilmTextBean">
+        SELECT film_id AS filmId, title AS filmTitle, description AS filmDesc
+        FROM film_text
+    </select>
+
+</mapper>
