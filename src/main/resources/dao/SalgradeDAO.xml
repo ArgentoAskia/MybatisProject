@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.SalgradeDAO" >
+
+    <!--
+       这种方式是专门针对不支持自增主键的数据库的，selectKey标签有几个属性特别说明一下：
+            resultType：返回值类型，参考mybatis默认的处理列表
+            keyColumn：数据库字段列名
+            keyProperty：实体类对应列名
+            order：决定在执行Insert SQL之前把自增主键值赋值给实体类还是在Insert SQL执行之后获取自增主键进行赋值
+            类似于Oracle这一类的不支持自增的数据库，只能先在序列中获取下一个的主键id值，然后连同这个id值一起插入到数据库。
+            而像mysql这一类的支持自增的数据库，就需要先把数据插入到数据库表，等数据库自动填充了新增的字段值之后再把这个值返回。
+            因此对于Oracle需要在插入之前生成自增，则需要配置Order="BEFORE"
+            像mysql这一类的只有先插入了才能拿到自增的，则需要配置Order="AFTER"
+    -->
+    <insert id="insert">
+        INSERT INTO salgrade(`LOSAL`, `HISAL`)
+        VALUES(#{losal}, #{hisal})
+        <selectKey resultType="_int" keyColumn="GRADE" keyProperty="grade" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+</mapper>
