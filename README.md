@@ -1,24 +1,24 @@
 ## mybatis-2-1-mybatis-config-with-java-xml
 
-本篇主要介绍并对比`mybatis`中框架配置文件（mybatis-config）的两种配置方式：`XML`和`Java`代码的配置。
+本篇主要介绍并对比`mybatis`中框架配置文件（`mybatis-config`）的两种配置方式：`XML`和`Java`代码的配置。
 
 在这里说明一下，在`mybatis`中，框架的配置文件只有`Java`代码的配置形式和`xml`的配置形式，**没有注解的形式**，各位你们看到的所谓的注解形式配置`mybatis`的**都是指**`Mapper`**文件**。
 
 ### 1.基于XML的配置方法
 
-基于XML的配置方法，主要是与`mybatis-config.xml`有关，在这个框架配置文件内，你可以填写的标签包括下面几个：
+基于`XML`的配置方法，主要是与`mybatis-config.xml`有关，在这个框架配置文件内，你可以填写的标签包括下面几个：
 
-- properties：一般在这个标签内定义一些key-value，也可以导入外部文件的
-- settings：框架的相关设置，如日志、缓存配置、驼峰命名转换等
-- typeAliases：给包里面的类起别名用到，一般用在mapper文件内
-- typeHandlers：自定义类型处理器
-- objectFactory：？
-- objectWrapperFactory：？
-- reflectorFactory：？
-- plugins：mybatis的拦截器插件配置相关
-- environments：用于配置连接环境，如连接池，事务管理器等
-- databaseIdProvider：但涉及到多类型数据库查询的时候需要用来做区分
-- mappers：指定mapper文件所在的位置。
+- `properties`：一般在这个标签内定义一些`key-value`，也可以导入外部文件的
+- `settings`：框架的相关设置，如日志、缓存配置、驼峰命名转换等
+- `typeAliases`：给包里面的类起别名用到，一般用在`mapper`文件内
+- `typeHandlers`：自定义类型处理器
+- `objectFactory`：？
+- `objectWrapperFactory`：？
+- `reflectorFactory`：？
+- `plugins`：`mybatis`的拦截器插件配置相关
+- `environments`：用于配置连接环境，如连接池，事务管理器等
+- `databaseIdProvider`：但涉及到多类型数据库查询的时候需要用来做区分
+- `mappers`：指定`mapper`文件所在的位置。
 
 基于XML的配置中，**标签的顺序不能改变，编写的模板一般是下面的形式**：
 
@@ -46,18 +46,62 @@
 
 ### 2.基于Java代码的配置方式
 
-基于`Java`代码的配置主要和`mybatis`的`Configuration`类有关，然后在Java代码中，一般使用`sqlSessionFactoryBuilder.build(Configuration configuration)`来配置整个`mybatis`框架。
+基于`Java`代码的配置主要和`mybatis`的`Configuration`类有关，然后在`Java`代码中，一般使用`sqlSessionFactoryBuilder.build(Configuration configuration)`来配置整个`mybatis`框架。
 
-`Java`代码的配置方式（`Configuration`类）对应于`XML`的相关API：
+`Java`代码的配置方式（`Configuration`类）对应于`XML`的相关`API`：
 
 #### properties标签
+
+`properties`标签对应`Configuration`类中的下面的方法：
 
 ```java
 // <properties/>标签
 public void setVariables(Properties variables);
 ```
 
+`properties`标签是属性标签，你可以在`mybatis-config.xml`中预先定义一些`key-value`：
+
+```properties
+# config.properties文件内容
+class=com.mysql.cj.jdbc.Driver
+url=jdbc:mysql://localhost:3306/sakila
+```
+
+```xml
+<properties resource="org/mybatis/jdbc/config.properties">
+    <property name="username" value="root"></property>
+    <property name="password" value="root"></property>
+</properties>
+```
+
+然后在其他地方替换掉动态配置的属性值，替换方法是使用：${`name`属性值}
+
+```xml
+<dataSource type="POOLED">
+  <property name="driver" value="${driver}"/>
+  <property name="url" value="${url}"/>
+  <property name="username" value="${username}"/>
+  <property name="password" value="${password}"/>
+</dataSource>
+```
+
+`properties`同时具备`resource`属性，可以指定外部的`properties`文件。
+
+如果是代码形式的设置，你可以这样写：
+
+```java
+InputStream config = loadPropertiesFileToInputStream("org/mybatis/jdbc/config.properties");
+Properties properties = new Properties();
+properties.load(config);
+properties.setProperty("username", "root");
+properties.setProperty("password", "root");
+Configuration configuration = new Configuration();
+configuration.setVariables(properties);
+```
+
 #### settings标签
+
+`settings`标签是`mybatis-config.xml`中最为重要的标签，他会改变`mybatis`框架的配置情况。在`XML`中的配置方式和`properties`差不多，但是在`Java`代码中的配置方式却很特别，在`Configuration`类中有`Setter` 方法和他的配置有关，具体参考下面的说明：
 
 ```java
 // <settings/>标签相关，其中<setting/>标签的name属性就是方法名去掉set首字母小写
@@ -97,7 +141,80 @@ public void setUseGeneratedKeys(boolean useGeneratedKeys);
 public void setVfsImpl(Class<? extends VFS> vfsImpl);
 ```
 
+下面这里出一个完整的`settings`标签的配置，同时给出对应的`Java`代码版本。
+
+```xml
+<settings>
+  <setting name="autoMappingBehavior" value="PARTIAL"/>
+  <setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
+  <setting name="cacheEnabled" value="true"/>
+  <setting name="defaultExecutorType" value="SIMPLE"/>
+  <setting name="defaultFetchSize" value="100"/>
+  <setting name="defaultStatementTimeout" value="25"/>
+  <setting name="jdbcTypeForNull" value="OTHER"/>
+  <setting name="lazyLoadingEnabled" value="true"/>
+  <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString"/>
+  <setting name="localCacheScope" value="SESSION"/>
+  <setting name="mapUnderscoreToCamelCase" value="false"/>
+  <setting name="multipleResultSetsEnabled" value="true"/>
+  <setting name="safeRowBoundsEnabled" value="false"/>
+  <setting name="useColumnLabel" value="true"/>
+  <setting name="useGeneratedKeys" value="false"/>  
+</settings>
+```
+
+```java
+Configuration configuration = new Configuration();
+// AutoMappingBehavior是一个枚举类
+configuration.setAutoMappingBehavior(AutoMappingBehavior.PARTIAL);
+// AutoMappingUnknownColumnBehavior同样是一个枚举类，下面如果没有特别说明默认都是枚举类
+configuration.setAutoMappingUnknownColumnBehavior(AutoMappingUnknownColumnBehavior.WARNING);
+configuration.setCacheEnabled(true);
+configuration.setDefaultExecutorType(ExecutorType.SIMPLE);
+configuration.setDefaultFetchSize(100);
+configuration.setDefaultStatementTimeout(25);
+configuration.setJdbcTypeForNull(JdbcType.OTHER);
+configuration.setLazyLoadingEnabled(true);
+Set<String> strings = new java.util.HashSet<>(Collections.emptySet());
+strings.add("equals");
+strings.add("clone");
+strings.add("hashCode");
+strings.add("toString");
+configuration.setLazyLoadTriggerMethods(strings);
+configuration.setLocalCacheScope(LocalCacheScope.SESSION);
+configuration.setMapUnderscoreToCamelCase(false);
+configuration.setMultipleResultSetsEnabled(true);
+configuration.setSafeRowBoundsEnabled(false);
+configuration.setUseColumnLabel(true);
+configuration.setUseGeneratedKeys(false);
+```
+
+具体每个`setting`的值和使用方式，参考后面的文章。
+
 #### typeAliases标签
+
+`typeAliases`类型别名可以为`Java`类型设置一个缩写名字。它仅为了在写`Mapper.xml`的时候能够降低冗余的全限定类名书写。
+
+`typeAliases`标签的写法如下：
+
+```xml
+<typeAliases>
+  <typeAlias alias="Author" type="domain.blog.Author"/>
+  <typeAlias alias="Blog" type="domain.blog.Blog"/>
+  <typeAlias alias="Comment" type="domain.blog.Comment"/>
+  <typeAlias alias="Post" type="domain.blog.Post"/>
+  <typeAlias alias="Section" type="domain.blog.Section"/>
+  <typeAlias alias="Tag" type="domain.blog.Tag"/>
+</typeAliases>
+```
+
+在写`Mapper`的时候，就可以用类型简写，注意下面的`resultType`：
+
+```xml
+<select id="selectAll" resultType="Author">
+    <!-- ... -->
+</select>
+```
 
 想通过代码的形式实现`typeAliases`标签的功能，需要靠`TypeAliasRegistry`类，这个类实际上内部维护了一个`HashMap`，该类有两个核心方法：`registerAlias()`和`getTypeAliases()`
 
@@ -106,7 +223,7 @@ public void setVfsImpl(Class<? extends VFS> vfsImpl);
 ```java
 Class<?> clazz = ...;
 TypeAliasRegistry typeAliasRegistry = configuration.getTypeAliasRegistry();
-// 以短类名进行注册，或者如果标记了@Alias注解起别名
+// 以短类名进行注册，或者如果标记了@Alias注解则使用注解起别名
 typeAliasRegistry.registerAlias(clazz);
 // 以指定的名称进行注册
 typeAliasRegistry.registerAlias("clazz", clazz);
@@ -122,6 +239,16 @@ public void registerAlias(Class<?> type);
 
 #### typeHandler标签
 
+```xml
+<!-- mybatis-config.xml -->
+<typeHandlers>
+  <!-- 
+	org.mybatis.example.ExampleTypeHandler是实现了TypeHandler接口的类 
+  -->
+  <typeHandler handler="org.mybatis.example.ExampleTypeHandler"/>
+</typeHandlers>
+```
+
 方法类似于`typeAliases`，注册方法如下：
 
 ```java
@@ -129,6 +256,13 @@ configuration.getTypeHandlerRegistry().register(TypeHandler typehandler);
 ```
 
 #### plugin标签
+
+```xml
+<plugins>
+  <!-- org.mybatis.example.ExamplePlugin是实现了Interceptor接口的类 -->
+  <plugin interceptor="org.mybatis.example.ExamplePlugin"></plugin>
+</plugins>
+```
 
 ```java
 // < plugin/>标签,添加拦截器插件
@@ -192,10 +326,24 @@ JdbcTransactionFactory jdbcTransactionFactory = new JdbcTransactionFactory();
 UnpooledDataSource unpooledDataSource = new UnpooledDataSource();
 unpooledDataSource.setDriver("com.mysql.cj.jdbc.Driver");
 unpooledDataSource.setUrl("jdbc:mysql://localhost:3306/sakila");
-unpooledDataSource.setPassword("sujiewei");
+unpooledDataSource.setPassword("root");
 unpooledDataSource.setUsername("root");
 Environment environment = new Environment(id, jdbcTransactionFactory, unpooledDataSource);
 configuration.setEnvironment(environment);
+```
+
+对应的`XML`配置：
+
+```xml
+<environment id="dev">
+        <transactionManager type="JDBC"></transactionManager>
+        <dataSource type="UNPOOLED">
+            <property name="url" value="jdbc:mysql://localhost:3306/sakila"/>
+            <property name="username" value="root"/>
+            <property name="password" value="root"/>
+            <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+        </dataSource>
+</environment>
 ```
 
 #### databaseIdProvider标签
