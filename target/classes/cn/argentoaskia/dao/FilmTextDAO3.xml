@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmTextDAO3">
+
+    <!--
+        foreach动态SQL：
+          collection：数组、集合名称。
+                     默认值如：argX（通用，X从0开始）、array（数组）、collection（集合类型）、list（列表）
+                     如果指定了@Param("name")，则可以使用：name作为名称，或者使用paramX，X代表数字，从1开始，
+                     特别注意指定了@Param("name")之后只有name名称和paramX可选，其他都是不可选的。
+          index：数组、集合、map的遍历下标，如果是数组、集合，则是数组、集合的下标，如果是map，则是map的key
+          item：每次从数组、集合、map中获取值，map的话获取value值
+          open：循环开始的拼接的开端
+          close：循环的结束的拼接结尾
+          separator：分割符号
+    -->
+    <insert id="insertArray1">
+        INSERT INTO film_text
+        <foreach collection="array" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertArray2">
+        INSERT INTO film_text
+        <foreach collection="arg0" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertArray3">
+        INSERT INTO film_text
+        <foreach collection="filmTexts" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertList1">
+        INSERT INTO film_text
+        <foreach collection="collection" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertList2">
+        INSERT INTO film_text
+        <foreach collection="list" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertList3">
+        INSERT INTO film_text
+        <foreach collection="filmTextList" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertList4">
+        INSERT INTO film_text
+        <foreach collection="arg0" index="i" item="filmText" open="VALUES"
+                 separator=",">
+            (#{filmText.filmId}, #{filmText.title}, #{filmText.description})
+        </foreach>
+    </insert>
+    <insert id="insertMap">
+
+    </insert>
+    <insert id="insertMap1">
+        INSERT INTO film_text
+        <foreach collection="_parameter" index="key" item="value" open="VALUES"
+                 separator=",">
+            (#{value.filmId}, CONCAT(#{value.title}, #{key}), CONCAT(#{value.description} , #{key}))
+        </foreach>
+    </insert>
+    <insert id="insertMap2">
+        INSERT INTO film_text
+        <foreach collection="stringFilmTextMap1" index="key" item="value" open="VALUES"
+                 separator=",">
+            (#{value.filmId}, CONCAT(#{value.title}, #{key}), CONCAT(#{value.description} , #{key}))
+        </foreach>,
+        <foreach collection="stringFilmTextMap2" index="key" item="value"
+                 separator=",">
+            (#{value.filmId}, CONCAT(#{value.title}, #{key}), CONCAT(#{value.description} , #{key}))
+        </foreach>
+    </insert>
+    <update id="update">
+        UPDATE film_text
+        <foreach collection="_parameter" open="SET " close=" "
+                 index="key" item="value" separator=",">
+            ${key} = #{value}
+        </foreach>
+        WHERE `film_id` = #{film_id}
+    </update>
+</mapper>
