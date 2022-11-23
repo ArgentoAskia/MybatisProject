@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="url" value="jdbc:mysql://localhost:3306/oracledata"/>
+                <property name="username" value="root"/>
+                <property name="password" value="sujiewei"/>
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- 单个DAO的配置方式 -->
+<!--        <mapper resource="cn/argentoaskia/dao/FilmTextDAO3.xml"/>-->
+
+        <!-- 扫描DAO包的形式 -->
+        <package name="dao"/>
+        <package name="dao2"/>
+    </mappers>
+</configuration>

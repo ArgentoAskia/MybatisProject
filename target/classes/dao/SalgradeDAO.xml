@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.SalgradeDAO" >
+
+    <!--
+        因为是自增主键，因此keyProperty指定实体类的对应数据库主键的列，keyColumn对应数据库的列
+        useGeneratedKeys="true"用于生成自增主键值
+        返回的主键值会自动填充到keyProperty配置的对象属性中，因此SQl语句中不需要指定主键值。
+        如果keyProperty内有有多个自增主键，用逗号分割
+
+        这种返回自增主键的方法只适合本身支持自增主键功能的数据库，如：mysql、sql server等，
+        不适合想oracle等不支持自增主键的数据库
+    -->
+    <insert id="insert" useGeneratedKeys="true"
+            keyProperty="grade" keyColumn="GRADE">
+        INSERT INTO salgrade(`LOSAL`, `HISAL`)
+        VALUES(#{losal}, #{hisal})
+    </insert>
+</mapper>
