@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.StaffDAO">
+    <resultMap id="staff" type="cn.argentoaskia.bean.Staff">
+        <id column="staff_id" property="staffId"/>
+        <result column="first_name" property="firstName"/>
+        <result column="last_name" property="lastName"/>
+        <result column="address_id" property="addressId"/>
+        <!-- 因为已经在TypeHandler上使用了注解约束了使用类型，所以这里不用任何的设置 -->
+        <result column="picture" property="picture"/>
+        <result column="email" property="email"/>
+        <result column="store_id" property="storeId"/>
+        <!-- 同理, 你甚至可以指定javatype和JdbcType-->
+        <result column="active" property="active" javaType="boolean" jdbcType="TINYINT"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <!--
+            因为即没有在mybatis-config的typehandlers里面定义，
+            也没有在Typehandler里面使用注解，所以必须显式指明TypeHandler的全限定类名
+        -->
+        <result column="last_update" property="lastUpdate" typeHandler="cn.argentoaskia.handlers.LocalDateTimeTypeHandler"/>
+    </resultMap>
+    <select id="selectAll" resultMap="staff">
+        SELECT staff_id, first_name, last_name, address_id, picture, email, store_id, active, username, password, last_update
+        FROM staff
+    </select>
+</mapper>

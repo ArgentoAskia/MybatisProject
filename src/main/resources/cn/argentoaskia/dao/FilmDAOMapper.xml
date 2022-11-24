@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmDAO">
+    <!-- 由于在mybatis-config中为Rating枚举类指定了javatype和JdbcType，所以页无需要额外配置 -->
+    <select id="selectAll" resultType="cn.argentoaskia.bean.Film">
+        SELECT f.film_id AS filmId,
+               f.title AS title,
+               f.description AS description,
+               f.release_year AS releaseYear,
+               f.language_id AS languageId,
+               f.original_language_id AS originalLanguageId,
+               f.rental_duration AS rentalDuration,
+               f.rental_rate AS rentalRate,
+               f.length AS length,
+               f.replacement_cost AS replacementCost,
+               f.rating AS rating,
+               f.special_features AS specialFeatures,
+               f.last_update AS lastUpdate
+        FROM film f
+    </select>
+</mapper>
