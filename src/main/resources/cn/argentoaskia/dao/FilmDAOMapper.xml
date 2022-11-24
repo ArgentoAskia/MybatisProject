@@ -20,4 +20,29 @@
                f.last_update AS lastUpdate
         FROM film f
     </select>
+    <!--
+        在#{}表达式内，你也可以指定javatype,jdbcType,jdbctypeName,typehandler等
+         javatype：指定参数对应的java类型，写全限定类名，不需要加""
+         jdbcType：写支持的数据库类型，不需要加""
+         jdbctypeName：实际上的数据库类名称，因为数据库不同，所以可能会缺失掉一部分jdbctype，类似于mysql的Enum，jdbcType没有这个类型，只能用VARCHAR代替
+                       但是你可以在jdbctypeName补充这个类名的名字，参考下面的写法
+         typeHandler：用于处理改类型的类型处理器，指定全限定类名，不需要加""
+    -->
+    <select id="selectByRating" resultType="cn.argentoaskia.bean.Film">
+        SELECT f.film_id AS filmId,
+               f.title AS title,
+               f.description AS description,
+               f.release_year AS releaseYear,
+               f.language_id AS languageId,
+               f.original_language_id AS originalLanguageId,
+               f.rental_duration AS rentalDuration,
+               f.rental_rate AS rentalRate,
+               f.length AS length,
+               f.replacement_cost AS replacementCost,
+               f.rating AS rating,
+               f.special_features AS specialFeatures,
+               f.last_update AS lastUpdate
+        FROM film f
+        WHERE rating = #{rating,javaType=cn.argentoaskia.enums.Rating,jdbcType=VARCHAR,jdbcTypeName=ENUM,typeHandler=cn.argentoaskia.handlers.RatingEnumTypeHandler}
+    </select>
 </mapper>

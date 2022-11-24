@@ -2,6 +2,7 @@ package cn.argentoaskia.dao;
 
 import cn.argentoaskia.bean.Film;
 import cn.argentoaskia.bean.Staff;
+import cn.argentoaskia.enums.Rating;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -40,6 +41,12 @@ public class StaffDAOTest {
     public void filmSelectAll(){
         FilmDAO mapper = sqlSession.getMapper(FilmDAO.class);
         List<Film> films = mapper.selectAll();
+        films.forEach(System.out::println);
+    }
+    @Test
+    public void filmSelectByRating(){
+        FilmDAO mapper = sqlSession.getMapper(FilmDAO.class);
+        List<Film> films = mapper.selectByRating(Rating.G);
         films.forEach(System.out::println);
     }
 }
