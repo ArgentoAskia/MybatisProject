@@ -16,7 +16,6 @@ public class FilmActor {
     private String rating;
     private String specialFeatures;
     private Timestamp lastUpdate;
-
     // 单个实体类对象
     private Actor actor;
 
