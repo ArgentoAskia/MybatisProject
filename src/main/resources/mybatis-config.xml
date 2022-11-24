@@ -12,7 +12,18 @@
         <typeHandler handler="cn.argentoaskia.handlers.InputStreamTypeHandler"/>
         <typeHandler handler="cn.argentoaskia.handlers.BooleanTypeHandler"/>
         <typeHandler handler="cn.argentoaskia.handlers.LocalDateTimeTypeHandler"/>
-        <typeHandler handler="cn.argentoaskia.handlers.RatingEnumTypeHandler"
+        <!--
+            这里采用了重写EnumTypeHandler的方式来实现这个转换器类型，
+            这里可以不指定javatype，因为EnumTypeHandler是继承了BaseTypeHandler的，
+            而BaseTypeHandler继承了TypeReference，mybatis会对继承了TypeReference的类进行特殊处理，可以自动推断出他的javatype
+            因此如果是实现了TypeHandler接口的类型处理器，javatype和JdbcType缺一不可（同等设计条件下）
+            而实现了BaseTypeHandler的类型处理器则不需要指定javatype
+         -->
+<!--        <typeHandler handler="cn.argentoaskia.handlers.RatingEnumTypeHandler"-->
+<!--                     jdbcType="VARCHAR"/>-->
+
+        <!-- 因为EnumTypeHandler是一个泛型处理器，因此需要指定这个处理器里面的泛型T是什么类型，只要指定JavaType即可-->
+        <typeHandler handler="org.apache.ibatis.type.EnumTypeHandler"
                      javaType="cn.argentoaskia.enums.Rating"
                      jdbcType="VARCHAR"/>
     </typeHandlers>
