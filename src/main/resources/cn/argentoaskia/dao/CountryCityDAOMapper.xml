@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.CountryCityDAO">
+    <!--
+        1.result-map 方式1:
+        注意需要指定ofType(list字段的原始类型)，collection才能工作
+    -->
+    <resultMap id="city1" type="cn.argentoaskia.bean.City">
+        <id column="city_id" property="cityId"/>
+        <result column="city_name" property="city"/>
+        <result column="city_country_id" property="countryId"/>
+        <result column="city_last_update" property="lastUpdate"/>
+    </resultMap>
+    <resultMap id="city2" type="cn.argentoaskia.bean.City">
+        <id column="id" property="cityId"/>
+        <result column="name" property="city"/>
+        <result column="country_id" property="countryId"/>
+        <result column="last_update" property="lastUpdate"/>
+    </resultMap>
+
+    <!-- 带列前缀的resultmap -->
+    <resultMap id="country1" type="cn.argentoaskia.bean.Country">
+        <id column="country_id" property="countryId"/>
+        <result column="country_name" property="country"/>
+        <result column="country_last_update" property="lastUpdate"/>
+        <collection property="cityList" columnPrefix="city_"
+                    ofType="cn.argentoaskia.bean.City"
+                    resultMap="city2"/>
+    </resultMap>
+    <!-- 不带列前缀的resultmap -->
+    <resultMap id="country2" type="cn.argentoaskia.bean.Country">
+        <id column="country_id" property="countryId"/>
+        <result column="country_name" property="country"/>
+        <result column="country_last_update" property="lastUpdate"/>
+        <collection property="cityList"
+                    ofType="cn.argentoaskia.bean.City"
+                    resultMap="city1"/>
+    </resultMap>
+
+    <!--
+        2.写在一个resultMap中
+    -->
+    <resultMap id="country3" type="cn.argentoaskia.bean.Country">
+        <id column="country_id" property="countryId"/>
+        <result column="country_name" property="country"/>
+        <result column="country_last_update" property="lastUpdate"/>
+        <collection property="cityList" columnPrefix="city_"
+                    ofType="cn.argentoaskia.bean.City">
+            <id column="id" property="cityId"/>
+            <result column="name" property="city"/>
+            <result column="country_id" property="countryId"/>
+            <result column="last_update" property="lastUpdate"/>
+        </collection>
+    </resultMap>
+
+    <!--
+       3.改变resultmap的主键，探索collection标签的实现原理
+       如果被当作主键的数据，其中他们有不同的列，则会选择前面的作为
+    -->
+    <resultMap id="country4" type="cn.argentoaskia.bean.Country">
+<!--        <id column="country_id" property="countryId"/>-->
+<!--        <result column="country_last_update" property="lastUpdate"/>-->
+        <id column="country_last_update" property="lastUpdate"/>
+        <result column="country_id" property="countryId"/>
+        <result column="country_name" property="country"/>
+
+        <collection property="cityList" columnPrefix="city_"
+                    ofType="cn.argentoaskia.bean.City">
+            <id column="country_id" property="countryId"/>
+            <result column="id" property="cityId"/>
+<!--            <id column="id" property="cityId"/>-->
+<!--            <result column="country_id" property="countryId"/>-->
+            <result column="last_update" property="lastUpdate"/>
+            <result column="name" property="city"/>
+        </collection>
+    </resultMap>
+
+
+<!--    <select id="selectCountryAndItsCities" resultMap="country1">-->
+<!--    <select id="selectCountryAndItsCities" resultMap="country2">-->
+    <select id="selectCountryAndItsCities" resultMap="country3">
+        SELECT c.country_id AS country_id,
+               c.country AS country_name,
+               c.last_update AS country_last_update,
+               c2.city_id AS city_id,
+               c2.city AS city_name,
+               c2.country_id AS city_country_id,
+               c2.last_update AS city_last_update
+        FROM country c join city c2 on c.country_id = c2.country_id
+        WHERE c.country_id = #{countryId}
+    </select>
+</mapper>
