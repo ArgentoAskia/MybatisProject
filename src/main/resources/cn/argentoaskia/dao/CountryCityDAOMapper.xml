@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.CountryCityDAO">
+    <!--
+       3.改变resultmap的主键，探索collection标签的实现原理
+       如果被当作主键的数据，其中他们有不同的列，则会选择前面的作为保留
+       (相同主键的数据只会保留一份！！)
+    -->
+    <resultMap id="country4" type="cn.argentoaskia.bean.Country">
+        <id column="country_id" property="countryId"/>
+        <result column="country_last_update" property="lastUpdate"/>
+<!--        <id column="country_last_update" property="lastUpdate"/>-->
+<!--        <result column="country_id" property="countryId"/>-->
+
+        <result column="country_name" property="country"/>
+        <collection property="cityList" columnPrefix="city_"
+                    ofType="cn.argentoaskia.bean.City">
+            <id column="country_id" property="countryId"/>
+            <result column="id" property="cityId"/>
+<!--            <id column="id" property="cityId"/>-->
+<!--            <result column="country_id" property="countryId"/>-->
+
+            <result column="last_update" property="lastUpdate"/>
+            <result column="name" property="city"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectCountryAndItsCities" resultMap="country4">
+        SELECT c.country_id AS country_id,
+               c.country AS country_name,
+               c.last_update AS country_last_update,
+               c2.city_id AS city_id,
+               c2.city AS city_name,
+               c2.country_id AS city_country_id,
+               c2.last_update AS city_last_update
+        FROM country c join city c2 on c.country_id = c2.country_id
+    </select>
+
+</mapper>
