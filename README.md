@@ -29,13 +29,13 @@
           - [ ] 注解形式
 
 - [ ] 3. `Mybatis`动态SQL
-     - [x] `if`
-     - [ ] `choose`
+     - [x] `if`：判断标签
+     - [x] `choose`：多选标签
      - [x] `where`：条件查询
      - [x] `set`：局部更新字段
      - [x] `foreach`：批量插入数据
      - [ ] `bind`：
-     - [ ] `trim`：
+     - [x] `trim`：前后缀拼接标签
      - [ ] `OGNL`表达式
 
 - [ ] 4. `Mybatis`复杂查询
@@ -53,9 +53,9 @@
              - [x] `resultmap`法
              - [x] `association`标签
           2. 一对多查询
-             - [ ] `collection`标签
+             - [x] `collection`标签
           3. 多对多查询
-             - [ ] `collection`标签
+             - [x] `collection`标签
           4. 鉴别器查询
              - [ ] `discriminator`标签
 
