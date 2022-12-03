@@ -58,6 +58,8 @@
              - [x] `collection`标签
           4. 鉴别器查询
              - [ ] `discriminator`标签
+     
+     - [x] 4. TypeHandler
 
 - [ ] 5. `Mybatis`缓存介绍
      - [ ] 一级缓存
