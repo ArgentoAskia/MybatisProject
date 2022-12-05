@@ -60,6 +60,7 @@
              - [ ] `discriminator`标签
      
      - [x] 4. TypeHandler
+     - [x] 5. PageSelected分页查询
 
 - [ ] 5. `Mybatis`缓存介绍
      - [ ] 一级缓存
