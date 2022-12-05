@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.PageSelectDAO">
+    <select id="selectPageByService" resultType="cn.argentoaskia.bean.Actor">
+        SELECT actor_id, first_name, last_name, last_update FROM actor
+    </select>
+    <select id="selectPageByRowBounds" resultType="cn.argentoaskia.bean.Actor">
+        SELECT actor_id, first_name, last_name, last_update FROM actor
+    </select>
+    <select id="selectPageByLimit" resultType="cn.argentoaskia.bean.Actor">
+        SELECT actor_id, first_name, last_name, last_update
+        FROM actor
+        LIMIT #{begin}, #{limit}
+    </select>
+    <select id="selectPageByPageHelper" resultType="cn.argentoaskia.bean.Actor">
+        SELECT actor_id, first_name, last_name, last_update FROM actor
+    </select>
+</mapper>
