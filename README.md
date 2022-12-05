@@ -47,7 +47,7 @@
 
      - [x] 2. 多数据库支持
 
-     - [ ] 3. 高级映射
+     - [X] 3. 高级映射
           1. 一对一查询
              - [x] `SQL`字段重命名法
              - [x] `resultmap`法
@@ -57,7 +57,7 @@
           3. 多对多查询
              - [x] `collection`标签
           4. 鉴别器查询
-             - [ ] `discriminator`标签
+             - [x] `discriminator`标签
      
      - [x] 4. TypeHandler
      - [x] 5. PageSelected分页查询
