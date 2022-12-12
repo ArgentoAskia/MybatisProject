@@ -39,7 +39,7 @@ public class PageSelectDAOTest {
         int limit = 10;
         // 1.先获取所有数据
         List<Actor> actors = mapper.selectPageByService();
-        // 2.通过page计算begin，如对于上面的分页参数，实际上就是第二页第一条数据就是10
+        // 2.通过page计算begin，如对于上面的分页参数，实际上就是第二页第一条数据对应的begin就是10
         int begin = (page - 1) * limit;
         // 3.通过subList获取一页数据
         List<Actor> pageActors = actors.subList(begin, begin + limit);
