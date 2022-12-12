@@ -4,6 +4,7 @@ package cn.argentoaskia.bean;
 import cn.argentoaskia.enums.Rating;
 
 import java.sql.Timestamp;
+import java.text.MessageFormat;
 
 public class Film {
 
@@ -136,6 +137,7 @@ public class Film {
   }
 
   public Film setRating(Rating rating) {
+
     this.rating = rating;
     return this;
   }
