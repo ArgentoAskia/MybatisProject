@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.InventoryDAO">
+    <!--
+        鉴别器一般用于bean的一个参数可以有多种复制结果选择的时候，类似于switch语句
+        colunm:用来做选择的列
+        javaType：该列对应的java类型
+        case: 具体的值,用于选择
+        resultType：一般这个值和语句的resultmap中的type一样，或者是其子类
+        resultMap：一般这个值和语句的resultmap中的type一样，或者是其子类
+    -->
+    <resultMap id="store" type="cn.argentoaskia.beans.Store">
+        <result property="storeId" column="store_id"/>
+        <result property="managerStaffId" column="store_manager_staff_id"/>
+        <result property="addressId" column="store_address_id"/>
+        <result property="lastUpdate" column="store_last_update"/>
+    </resultMap>
+    <resultMap id="film" type="cn.argentoaskia.beans.Film">
+        <id property="filmId" column="film_id"/>
+        <result property="description" column="film_description"/>
+        <result property="title" column="film_title"/>
+        <result property="languageId" column="film_language_id"/>
+        <result property="lastUpdate" column="film_last_update"/>
+        <result property="length" column="film_length"/>
+        <result property="originalLanguageId" column="film_original_language_id"/>
+        <result property="rating" column="film_rating"/>
+        <result property="releaseYear" column="film_releaseYear"/>
+        <result property="rentalDuration" column="film_rental_duration"/>
+        <result property="rentalRate" column="film_rental_rate"/>
+        <result property="replacementCost" column="film_replacement_cost"/>
+        <result property="specialFeatures" column="film_special_features"/>
+    </resultMap>
+    <resultMap id="inventory" type="cn.argentoaskia.beans.Inventory">
+        <id property="inventoryId" column="inventory_id"/>
+        <result property="lastUpdate" column="inventory_last_update"/>
+        <discriminator javaType="int" column="flag">
+            <case value="0" resultType="cn.argentoaskia.beans.Inventory">
+                <association property="filmOrStore" resultMap="film"/>
+            </case>
+            <case value="1" resultType="cn.argentoaskia.beans.Inventory">
+                <association property="filmOrStore" resultMap="store"/>
+            </case>
+        </discriminator>
+    </resultMap>
+
+
+    <select id="selectByInventoryId" resultMap="inventory">
+        <if test="inventorId % 2 == 0">
+            SELECT i.inventory_id % 2 AS flag, i.inventory_id, i.film_id AS inventory_film_id,
+                   i.store_id AS inventory_store_id, i.last_update AS inventory_last_update,
+                   f.film_id, f.title AS film_title,
+                   f.description AS film_description, f.release_year AS film_release_year,
+                   f.language_id AS film_language_id, f.original_language_id AS film_original_language_id,
+                   f.rental_duration AS film_rental_duration, f.rental_rate AS film_rental_rate,
+                   f.length AS film_length, f.replacement_cost AS film_replacement_cost,
+                   f.rating AS film_rating, f.special_features AS film_special_features,
+                   f.last_update AS film_last_update
+            FROM inventory i join film f on f.film_id = i.film_id
+        </if>
+        <if test="inventorId % 2 == 1">
+            SELECT i.inventory_id % 2 AS flag, i.inventory_id, i.film_id AS inventory_film_id,
+                   i.store_id AS inventory_store_id, i.last_update AS inventory_last_update,
+                   s.store_id, s.manager_staff_id AS store_manager_staff_id,
+                   s.address_id AS store_address_id, s.last_update AS store_last_update
+            FROM inventory i join store s on s.store_id = i.store_id
+        </if>
+        WHERE inventory_id = #{inventorId}
+    </select>
+
+</mapper>
