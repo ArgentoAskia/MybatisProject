@@ -1,0 +1,12 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.CategoryDAO" >
+    <select id="selectAll" resultType="category">
+        SELECT category_id categoryId,
+               name name,
+               last_update lastUpdate
+        FROM category
+    </select>
+    <select id="selectById" resultType="cn.argentoaskia.bean.Category"></select>
+</mapper>

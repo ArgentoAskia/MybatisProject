@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 方式三：采用DAOSupport的方式进行
+         这种方式需要写DAO实现类，继承SqlSessionDaoSupport+实现DAO接口
+         除非你需要将查询结果做一些特殊处理，或者在传入参数的时候（实际上也没必要，有动态SQL）做一些参数处理
+         否则不建议使用这种方式，写法比较麻烦
+    -->
+    <import resource="spring-dao.xml"/>
+
+    <bean id="actorDAO" class="cn.argentoaskia.dao.support.ActorDAOSupport">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+    </bean>
+
+    <bean id="categoryDAO" class="cn.argentoaskia.dao.support.CategoryDAOSupport">
+        <property name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+    </bean>
+</beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 方式二：datasource + SqlSessionFactoryBean + SqlSessionTemplate实现包揽Spring事务框架 + 原生SqlSession方式 -->
+    <!-- 先引入通用的配置容器 -->
+    <import resource="classpath:spring-dao.xml"/>
+
+    <!-- 创建SqlSessionTemplate -->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean"/>
+    </bean>
+
+</beans>
