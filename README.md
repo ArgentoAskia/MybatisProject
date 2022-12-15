@@ -100,3 +100,8 @@
         - [ ] `mybatis-test-API`
         - [ ] `SQL`语句构建器
         - [ ] 日志配置
+
+- [ ] 8. 框架整合
+     - [x] 1. `Mybatis-Spring`整合
+     - [ ] 2. `Mybatis-SpringBoot`整合
+
