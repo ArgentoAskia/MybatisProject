@@ -102,6 +102,13 @@
         - [ ] 日志配置
 
 - [ ] 8. 框架整合
-     - [x] 1. `Mybatis-Spring`整合
+     - [x] 1. `Mybatis-Spring`整合：unknown、2023.1.12
      - [ ] 2. `Mybatis-SpringBoot`整合
 
+## 更新日志
+
+- 2023.01.12 - 更新Mybatis-Spring框架整合笔记
+
+------
+
+- 未知更新时间 - 更新Mybatis整体demo 
