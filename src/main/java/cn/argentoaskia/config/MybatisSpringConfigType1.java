@@ -19,7 +19,6 @@ import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.io.IOException;
 
-//
 @Configuration
 @PropertySource("classpath:jdbc.properties")
 public class MybatisSpringConfigType1 {
@@ -79,6 +78,7 @@ public class MybatisSpringConfigType1 {
 
         // 4.配置datasourcces
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeAliasesPackage("cn.argentoaskia.bean");
         return sqlSessionFactoryBean;
     }
 
@@ -92,6 +92,8 @@ public class MybatisSpringConfigType1 {
         mapperScannerConfigurer.setSqlSessionFactoryBeanName(sqlSessionFactoryBeanName);
         // 6.配置DAO接口所在包，mybatis-spring会将相应的包
         mapperScannerConfigurer.setBasePackage(basePackage);
+        // 7.下面这行代码只会将标记了@Mapper注解的DAO接口放进Spring容器
+//        mapperScannerConfigurer.setAnnotationClass(Mapper.class);
         return mapperScannerConfigurer;
     }
 

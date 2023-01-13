@@ -29,7 +29,9 @@ import java.io.IOException;
 @Configuration
 @PropertySource("classpath:jdbc.properties")
 @MapperScan(basePackages =  "cn.argentoaskia.dao",
-        sqlSessionFactoryRef = "sqlSessionFactoryBean")
+          sqlSessionTemplateRef = "sqlSessionTemplate")
+//@MapperScan(basePackages =  "cn.argentoaskia.dao",
+//        sqlSessionFactoryRef = "sqlSessionFactoryBean")
 //@MapperScan(basePackages =  "cn.argentoaskia.dao",
 //        sqlSessionFactoryRef = "sqlSessionFactoryBean",
 //        annotationClass = Mapper.class)
@@ -76,6 +78,12 @@ public class MybatisSpringConfigType2 {
 
         // 4.配置datasourcces
         sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeAliasesPackage("cn.argentoaskia.bean");
         return sqlSessionFactoryBean;
+    }
+
+    @Bean
+    public SqlSessionTemplate sqlSessionTemplate(@Autowired SqlSessionFactory sqlSessionFactory){
+        return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
