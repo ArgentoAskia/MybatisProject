@@ -94,6 +94,5 @@ public class MybatisSpringConfigType1 {
         mapperScannerConfigurer.setBasePackage(basePackage);
         return mapperScannerConfigurer;
     }
-//
 
 }
