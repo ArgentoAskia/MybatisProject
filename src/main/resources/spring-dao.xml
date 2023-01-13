@@ -20,7 +20,7 @@
             不过其中有几个需要特别说明一下：
             - configLocation:mybatis-config.xml的位置
             - configuration:configuration对象，在使用代码形式配置mybatis的时候介绍过这个类，
-                            1.3.0版本之后mybatis为了方便开发着配置Settings标签内容，讲这个类开放。
+                            1.3.0版本之后mybatis为了方便开发着配置Settings标签内容，将这个类开放。
                             理论上你可以就配置这个对象来使用mybatis即可。
             - environment：对应environment标签的id值
             - dataSource：这个属性没啥好说的
