@@ -78,23 +78,4 @@ public class MybatisSpringConfigType2 {
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean;
     }
-
-    // 在这里可以添加一些线程框架支持
-    @Bean
-    public SqlSessionTemplate sqlSessionTemplate(
-            @Autowired SqlSessionFactory sqlSessionFactory
-    ){
-        return new SqlSessionTemplate(sqlSessionFactory);
-    }
-    @Bean
-    public MapperScannerConfigurer mapperScannerConfigurer(
-            @Value("sqlSessionTemplate") String sqlSessionTemplateName,
-            @Value("cn.argentoaskia.dao") String daoPackageLocation
-    ){
-        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setSqlSessionTemplateBeanName(sqlSessionTemplateName);
-        mapperScannerConfigurer.setBasePackage(daoPackageLocation);
-        return mapperScannerConfigurer;
-    }
-
 }
