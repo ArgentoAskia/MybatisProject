@@ -2,8 +2,12 @@ package cn.argentoaskia.config;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.datasource.unpooled.UnpooledDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.omg.CORBA.StringHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -74,4 +78,23 @@ public class MybatisSpringConfigType2 {
         sqlSessionFactoryBean.setDataSource(dataSource);
         return sqlSessionFactoryBean;
     }
+
+    // 在这里可以添加一些线程框架支持
+    @Bean
+    public SqlSessionTemplate sqlSessionTemplate(
+            @Autowired SqlSessionFactory sqlSessionFactory
+    ){
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
+    @Bean
+    public MapperScannerConfigurer mapperScannerConfigurer(
+            @Value("sqlSessionTemplate") String sqlSessionTemplateName,
+            @Value("cn.argentoaskia.dao") String daoPackageLocation
+    ){
+        MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+        mapperScannerConfigurer.setSqlSessionTemplateBeanName(sqlSessionTemplateName);
+        mapperScannerConfigurer.setBasePackage(daoPackageLocation);
+        return mapperScannerConfigurer;
+    }
+
 }
