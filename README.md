@@ -102,7 +102,7 @@
         - [ ] 日志配置
 
 - [ ] 8. 框架整合
-     - [x] 1. `Mybatis-Spring`整合：unknown、2023.1.12
+     - [x] 1. `Mybatis-Spring`整合：unknown、2023.1.12、2023.1.13
      - [ ] 2. `Mybatis-SpringBoot`整合
 
 ## 更新日志
