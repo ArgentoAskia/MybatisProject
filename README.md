@@ -389,4 +389,3 @@ try (InputStream inputStream = Resources.getResourceAsStream(mapperResource)) {
     mapperParser.parse();
 }
 ```
-
