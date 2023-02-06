@@ -15,15 +15,15 @@ public interface FilmTextDAOAnnotationWithProvider {
     @SelectProvider(type = FilmTextDAOProvider2.class, method = "selectById")
     FilmTextOrigin selectById(Integer id);
 
-    @SelectProvider(type = FilmTextDAOProvider2.class, method = "insert")
+    @InsertProvider(type = FilmTextDAOProvider2.class, method = "insert")
     Integer insert(FilmTextOrigin filmTextOrigin);
 
-    @SelectProvider(value = FilmTextDAOProvider2.class, method = "update")
+    @UpdateProvider(value = FilmTextDAOProvider2.class, method = "update")
     Integer update(FilmTextOrigin filmTextOrigin);
 
-    @SelectProvider(FilmTextDAOProvider.class)
+    @DeleteProvider(FilmTextDAOProvider.class)
     Integer delete(FilmTextOrigin filmTextOrigin);
 
-    @SelectProvider(FilmTextDAOProvider.class)
+    @DeleteProvider(FilmTextDAOProvider.class)
     Integer delete2(Integer id);
 }
