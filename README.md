@@ -1,8 +1,61 @@
 ## mybatis-2-1-mybatis-config-with-java-xml
 
-本篇主要介绍并对比`mybatis`中框架配置文件（`mybatis-config`）的两种配置方式：`XML`和`Java`代码的配置。
+本篇主要介绍`mybatis`中框架配置文件（`mybatis-config`）的两种配置方式：`XML`和`Java`代码的配置。
 
-在这里说明一下，在`mybatis`中，框架的配置文件只有`Java`代码的配置形式和`xml`的配置形式，**没有注解的形式**，各位你们看到的所谓的注解形式配置`mybatis`的**都是指**`Mapper`**文件**。
+在这里说明一下，在`mybatis`中，框架的配置文件（`mybatis-config`）只有`Java`代码的配置形式和`xml`的配置形式，**没有注解的形式**，各位你们看到的所谓的注解形式配置`mybatis`的**都是指配置**`Mapper`**文件，即具体写SQL语句的地方**。
+
+这里给已经混乱的同学说明一下，`mybatis`框架配置起来使用一般需要两个配置文件：
+
+1. `mybatis-config`：代指框架的配置文件，俗称总配置文件，规定数据库连接设置，日志输出，`properties`键值对和指定`mapper`位置等，有两种配置方式：`XML`和`Java`代码
+2. `Mapper`：代指`DAO`接口中的各种映射文件，写`SQL`语句的地方，一个`Mapper`绑定一个`DAO`接口，有两种配置方式：`XML`和注解
+
+`mybatis-config`配置文件只要写一次就`ok`，`Mapper`则不一样，理论上有多少个`DAO`接口就需要多少个`Mapper`，当然注解形式写`Mapper`时，`SQL`一般写在`DAO`接口里面就`ok`，因此这个时候`DAO`接口自己就是一个`Mapper`。
+
+## 总配置文件框架
+
+总配置文件的基本框架：
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+</configuration>
+```
+
+大家可以把这个框架复制一份弄成一个`idea`的`live template`。
+
+总配置文件通常会放在`maven`项目的`Resources`文件夹下面，这个配置文件的最基本内容形式如下：
+
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 数据库连接 -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://192.168.43.106:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="sujiewei"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- mapper文件的位置 -->
+    <mappers>
+        <mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"/>
+    </mappers>
+</configuration>
+```
+
+## 两种配置方式属性值参考
 
 ### 1.基于XML的配置方法
 
@@ -20,7 +73,7 @@
 - `databaseIdProvider`：但涉及到多类型数据库查询的时候需要用来做区分
 - `mappers`：指定`mapper`文件所在的位置。
 
-基于XML的配置中，**标签的顺序不能改变，编写的模板一般是下面的形式**：
+基于`XML`的配置中，**标签的顺序不能改变，编写的模板一般是下面的形式**：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -42,7 +95,9 @@
 </configuration>
 ```
 
-其中具体的配置怎么整，就参考后面的`demo`了。
+其中具体的配置可以参考：
+
+
 
 ### 2.基于Java代码的配置方式
 
@@ -67,6 +122,8 @@ class=com.mysql.cj.jdbc.Driver
 url=jdbc:mysql://localhost:3306/sakila
 ```
 
+`properties`同时具备`resource`属性，可以指定外部的`properties`文件。
+
 ```xml
 <properties resource="org/mybatis/jdbc/config.properties">
     <property name="username" value="root"></property>
@@ -85,11 +142,10 @@ url=jdbc:mysql://localhost:3306/sakila
 </dataSource>
 ```
 
-`properties`同时具备`resource`属性，可以指定外部的`properties`文件。
-
 如果是代码形式的设置，你可以这样写：
 
 ```java
+// 读入Properties文件：核心时class.getResourcesAsStream()方法
 InputStream config = loadPropertiesFileToInputStream("org/mybatis/jdbc/config.properties");
 Properties properties = new Properties();
 properties.load(config);
