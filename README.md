@@ -6,8 +6,8 @@
 
 这里给已经混乱的同学说明一下，`mybatis`框架配置起来使用一般需要两个配置文件：
 
-1. `mybatis-config`：代指框架的配置文件，俗称总配置文件，规定数据库连接设置，日志输出，`properties`键值对和指定`mapper`位置等，有两种配置方式：`XML`和`Java`代码
-2. `Mapper`：代指`DAO`接口中的各种映射文件，写`SQL`语句的地方，一个`Mapper`绑定一个`DAO`接口，有两种配置方式：`XML`和注解
+1. `mybatis-config`：代指框架的配置文件，俗称总配置文件，规定数据库连接设置，日志输出，`properties`键值对和指定`mapper`位置等，有两种配置方式：`XML`和`Java`代码（`Configuration`类）
+2. `Mapper`：代指`DAO`接口中的各种映射文件，写`SQL`语句的地方，一个`Mapper`绑定一个`DAO`接口，有三种配置方式：`XML`、注解和`Provider`类方式
 
 `mybatis-config`配置文件只要写一次就`ok`，`Mapper`则不一样，理论上有多少个`DAO`接口就需要多少个`Mapper`，当然注解形式写`Mapper`时，`SQL`一般写在`DAO`接口里面就`ok`，因此这个时候`DAO`接口自己就是一个`Mapper`。
 
