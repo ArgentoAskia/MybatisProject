@@ -103,4 +103,16 @@ public class FilmTextDAOParameterTest {
         Integer update = mapper.update4(params, filmTextOrigin2);
         System.out.println(update);
     }
+
+
+    @Test
+    public void testUpdate5(){
+        FilmTextOrigin2 filmTextOrigin2 = new FilmTextOrigin2();
+        filmTextOrigin2.setFilm_id(1000)
+                .setTitle("test")
+                .setDescription("test");
+        Integer filmId = 1000;
+        Integer update = mapper.update5(filmId, filmTextOrigin2);
+        System.out.println(update);
+    }
 }
