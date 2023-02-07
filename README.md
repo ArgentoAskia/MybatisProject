@@ -111,6 +111,8 @@
 
 ------
 
+- 2023.02.06 - 添加Mapper和Mybatis-config区别说明
+
 ------
 
 - 2023.02.01 - 更新mybatis-2-1-README
