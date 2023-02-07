@@ -112,4 +112,16 @@ public interface FilmTextDAOParameter {
      */
     Integer update4(@Param("ref") Map<String, Object> ref,@Param("newObj") FilmTextOrigin2 newObj);
 
+    /**
+     * 多个参数 + 基本类型 + POJO组合：
+     *  采用@Param注解即可，注意POJO的使用会涉及到@Param注解里面的名字.属性名,如：#{newObj.title}
+     *  也可以采用paramX的形式，同样注意PoJo的ParamX要使用.属性名表示，如：#{param1.title}
+     *  也可以采用argX的形式，同样注意PoJo的argX要使用.属性名表示，如：#{arg0.title}
+     * @param filmId
+     * @param newObject
+     * @return
+     */
+    Integer update5(/*@Param("filmId")*/ Integer filmId,
+                    /*@Param("newObj")*/ FilmTextOrigin2 newObject);
+
 }

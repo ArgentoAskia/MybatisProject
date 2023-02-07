@@ -42,6 +42,13 @@
             description = #{newObj.description}
         WHERE film_id = #{ref.id}
     </update>
+    <update id="update5">
+        UPDATE film_text
+        SET film_id = #{arg1.film_id},
+            title = #{arg1.title},
+            description = #{arg1.description}
+        WHERE film_id = #{arg0}
+    </update>
     <delete id="delete">
         DELETE FROM film_text
         WHERE film_id = #{id} AND title = #{title} AND description = #{desc}
