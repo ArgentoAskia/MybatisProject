@@ -1,0 +1,34 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 基本CRUD,XML形式配置——Mapper -->
+<mapper namespace="cn.argentoaskia.dao.FilmTextDAOXML" >
+    <insert id="insert">
+        INSERT INTO film_text
+        VALUES(#{film_id}, #{title}, #{description})
+    </insert>
+    <update id="update">
+        UPDATE film_text
+        SET title = #{title}, description = #{description}
+        WHERE film_id = #{film_id}
+    </update>
+    <delete id="delete">
+        DELETE FROM film_text
+        WHERE film_id = #{film_id} AND
+              title = #{title} AND
+              description = #{description}
+    </delete>
+    <delete id="delete2">
+        DELETE FROM film_text
+        WHERE film_id = #{id}
+    </delete>
+    <select id="selectAll" resultType="cn.argentoaskia.beans.FilmTextOrigin">
+        SELECT film_id, title, description
+        FROM film_text
+    </select>
+    <select id="selectById" resultType="cn.argentoaskia.beans.FilmTextOrigin">
+        SELECT film_id, title, description
+        FROM film_text
+        WHERE film_id = #{id}
+    </select>
+</mapper>
