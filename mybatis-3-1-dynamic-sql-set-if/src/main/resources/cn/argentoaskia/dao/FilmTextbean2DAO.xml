@@ -1,0 +1,18 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmTextBean2DAO">
+    <update id="update" parameterType="cn.argentoaskia.beans.FilmTextBean2">
+        UPDATE film_text
+        <set>
+            <!-- 特别注意test属性内部是对象的字段而不是数据库的字段 -->
+            <if test="filmTitle != null and filmTitle != ''">
+                title = #{filmTitle},
+            </if>
+            <if test="filmDescription != null and filmDescription != ''">
+                `description` = #{filmDescription},
+            </if>
+        </set>
+        WHERE film_id = #{filmId}
+    </update>
+</mapper>

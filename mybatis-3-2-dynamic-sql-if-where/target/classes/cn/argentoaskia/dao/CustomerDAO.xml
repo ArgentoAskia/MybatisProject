@@ -1,0 +1,57 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.CustomerDAO" >
+    <resultMap id="customer" type="cn.argentoaskia.bean.Customer">
+        <result property="active" column="active"/>
+        <result property="addressId" column="address_id"/>
+        <result property="createDate" column="create_date" typeHandler="org.apache.ibatis.type.DateTypeHandler"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="lastUpdate" column="last_update" typeHandler="org.apache.ibatis.type.DateTypeHandler"/>
+        <result property="storeId" column="store_id"/>
+    </resultMap>
+    <select id="selectByConditions" resultMap="customer">
+        SELECT customer_id,
+               store_id,
+               first_name,
+               last_name,
+               email,
+               address_id,
+               active,
+               create_date,
+               last_update
+        FROM customer
+        <where>
+            <if test="customerId != null">
+                customer_id = #{customerId}
+            </if>
+            <if test="storeId != null">
+                store_id = #{storeId}
+            </if>
+            <if test="firstName != null">
+                first_name = #{firstName}
+            </if>
+            <if test="lastName != null">
+                last_name = #{lastName}
+            </if>
+            <if test="email != null">
+                email = #{email}
+            </if>
+            <if test="addressId != null">
+                address_id = #{addressId}
+            </if>
+            <if test="active != null">
+                `active` = #{active}
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate}
+            </if>
+            <if test="lastUpdate != null">
+                last_update = #{lastUpdate}
+            </if>
+        </where>
+    </select>
+</mapper>

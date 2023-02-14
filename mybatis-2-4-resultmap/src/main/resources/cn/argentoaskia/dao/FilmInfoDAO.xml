@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.FilmInfoDAO" >
+    <resultMap id="filmInfo" type="cn.argentoaskia.beans.FilmInfo">
+        <result column="film_id" property="filmId"/>
+        <result column="title" property="filmTitle"/>
+        <result column="description" property="filmDesc"/>
+        <result column="first_name" property="filmActorFirstName"/>
+        <result column="last_name" property="filmActorLastName"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="filmInfo">
+        SELECT ft.film_id, ft.title, ft.description, a.first_name, a.last_name
+        FROM film_text ft JOIN film_actor fa on ft.film_id = fa.film_id
+                          JOIN actor a on a.actor_id = fa.actor_id
+    </select>
+    <select id="selectAll2" resultType="cn.argentoaskia.beans.FilmInfo">
+        SELECT ft.film_id AS filmId,
+               ft.title AS filmTitle,
+               ft.description AS filmDesc,
+               a.first_name AS filmActorFirstName,
+               a.last_name AS filmActorLastName
+        FROM film_text ft JOIN film_actor fa on ft.film_id = fa.film_id
+                          JOIN actor a on a.actor_id = fa.actor_id
+    </select>
+</mapper>
