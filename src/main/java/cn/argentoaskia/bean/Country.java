@@ -1,5 +1,6 @@
 package cn.argentoaskia.bean;
 
+import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.util.List;
 
