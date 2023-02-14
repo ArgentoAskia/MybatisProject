@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.DynamicTrimDAO">
+    <!--
+        trim标签专门用来拼接左右连接字符的，有四个属性
+        prefix:准备拼接的左连接符号
+        suffix:准备拼接的右连接符号
+        prefixOverrides:匹配标签体内前缀符合改属性的内容，把这个内容去掉，如果需要匹配多个情况，可以使用 | 分割
+        suffixOverrides:匹配标签体内后缀符合改属性的内容，把这个内容去掉，如果需要匹配多个情况，可以使用 | 分割
+        需要注意，trim去掉内容的代码逻辑比较直接，只要sql语句以某个东西开头符合就会去掉，比如：
+        prefixOverrides=“SE”，当标签体的SQL语句是：SET b = #{b}, c = #{c},
+        这样mybatis还是会把语句前面的SE给去掉，变成：T b = #{b}, c = #{c}。
+        可能在你看来mybatis这样的处理方式比较搞笑，但mybatis就是这样处理的，所以我们只要遵循规则就好！
+    -->
+    <update id="update">
+        UPDATE film_text
+        <trim prefix="SET " suffixOverrides=",">
+            <if test="filmTitle != null and filmTitle != ''">
+                title = #{filmTitle},
+            </if>
+            <if test="filmDescription != null and filmDescription != ''">
+                `description` = #{filmDescription},
+            </if>
+        </trim>
+        WHERE film_id = #{filmId}
+    </update>
+
+    <select id="selectByConditions" resultType="cn.argentoaskia.bean.Customer2">
+        SELECT customer_id,
+        store_id,
+        first_name,
+        last_name,
+        email,
+        address_id,
+        active,
+        create_date,
+        last_update
+        FROM customer
+        <trim prefix="WHERE " prefixOverrides="AND |OR |AND\n|AND\r|AND\t|OR\n|OR\r|OR\t">
+            <if test="customerId != null">
+                AND customer_id = #{customerId}
+            </if>
+            <if test="storeId != null">
+                AND store_id = #{storeId}
+            </if>
+            <if test="firstName != null">
+                AND first_name = #{firstName}
+            </if>
+            <if test="lastName != null">
+                AND last_name = #{lastName}
+            </if>
+            <if test="email != null">
+                AND email = #{email}
+            </if>
+            <if test="addressId != null">
+                AND address_id = #{addressId}
+            </if>
+            <if test="active != null">
+                AND `active` = #{active}
+            </if>
+            <if test="createDate != null">
+                AND create_date = #{createDate}
+            </if>
+            <if test="lastUpdate != null">
+                AND last_update = #{lastUpdate}
+            </if>
+        </trim>
+    </select>
+</mapper>

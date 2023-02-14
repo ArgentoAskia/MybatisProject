@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.argentoaskia.dao.ActorDAO">
+
+    <!--
+        choose...when....otherwise...的逻辑
+    -->
+    <select id="selectBySingleConditions" resultType="cn.argentoaskia.bean.Actor">
+        SELECT actor_id AS actorId,
+               first_name AS firstName,
+               last_name AS lastName,
+               last_update AS lastUpdate
+        FROM actor
+        WHERE 1=1
+        <choose>
+            <when test="lastName != null and lastName != ''">
+                AND `last_name` like #{lastName}
+            </when>
+            <when test="firstName != null and firstName != ''">
+                AND `first_name` like #{firstName}
+            </when>
+            <otherwise>
+                AND `actor_id` = #{actorId}
+            </otherwise>
+        </choose>
+    </select>
+</mapper>
