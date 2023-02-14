@@ -3,7 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.argentoaskia.dao.FilmActorDAO" >
 
-    <!-- 重命名字段的方式 -->
+    <!--
+        1.重命名字段的方式
+     -->
     <select id="selectFilmActorByFilmId" resultType="cn.argentoaskia.bean.FilmActor">
         SELECT a.actor_id AS "actor.actorId",
                a.first_name AS "actor.firstName",
@@ -28,8 +30,8 @@
     </select>
 
     <!--
-        简单ResultMap,
-        这里采用了继承机制，复用了film的ResultMap，因此filmActor和filmActor2的等价
+        2.简单ResultMap,
+          这里采用了继承机制，复用了film的ResultMap，因此filmActor和filmActor2的等价
     -->
     <resultMap id="film" type="cn.argentoaskia.bean.Film">
         <id property="filmId" column="film_id"/>
@@ -52,7 +54,7 @@
         <result property="actor.lastName" column="last_name"/>
         <result property="actor.lastUpdate" column="last_update"/>
     </resultMap>
-    <resultMap id="filmActor2" type="cn.argentoaskia.bean.FilmActor" extends="film">
+    <resultMap id="filmActor2" type="cn.argentoaskia.bean.FilmActor">
         <id property="filmId" column="film_id"/>
         <id property="actor.actorId" column="actor_id"/>
         <result property="description" column="description"/>
@@ -115,4 +117,52 @@
                      join film f on f.film_id = fa.film_id
         WHERE f.film_id = #{filmId} AND a.actor_id = #{actorId}
     </select>
+
+    <!--
+         3.采用association标签的ResultMap
+         可以自己指定内容，也可以自己指定resultmap属性
+    -->
+    <resultMap id="actor" type="cn.argentoaskia.bean.Actor">
+        <id property="actorId" column="actor_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="lastUpdate" column="last_update"/>
+    </resultMap>
+    <resultMap id="filmActor3" type="cn.argentoaskia.bean.FilmActor">
+        <id property="filmId" column="film_id"/>
+        <result property="description" column="description"/>
+        <result property="title" column="title"/>
+        <result property="languageId" column="language_id"/>
+        <result property="lastUpdate" column="last_update"/>
+        <result property="length" column="length"/>
+        <result property="originalLanguageId" column="original_language_id"/>
+        <result property="rating" column="rating"/>
+        <result property="releaseYear" column="releaseYear"/>
+        <result property="rentalDuration" column="rental_duration"/>
+        <result property="rentalRate" column="rental_rate"/>
+        <result property="replacementCost" column="replacement_cost"/>
+        <result property="specialFeatures" column="special_features"/>
+        <association property="actor">
+            <id property="actorId" column="actor_id"/>
+            <result property="firstName" column="first_name"/>
+            <result property="lastName" column="last_name"/>
+            <result property="lastUpdate" column="last_update"/>
+        </association>
+    </resultMap>
+    <resultMap id="filmActor4" type="cn.argentoaskia.bean.FilmActor">
+        <id property="filmId" column="film_id"/>
+        <result property="description" column="description"/>
+        <result property="title" column="title"/>
+        <result property="languageId" column="language_id"/>
+        <result property="lastUpdate" column="last_update"/>
+        <result property="length" column="length"/>
+        <result property="originalLanguageId" column="original_language_id"/>
+        <result property="rating" column="rating"/>
+        <result property="releaseYear" column="releaseYear"/>
+        <result property="rentalDuration" column="rental_duration"/>
+        <result property="rentalRate" column="rental_rate"/>
+        <result property="replacementCost" column="replacement_cost"/>
+        <result property="specialFeatures" column="special_features"/>
+        <association property="actor" resultMap="actor"/>
+    </resultMap>
 </mapper>
