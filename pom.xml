@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.argentoaskia</groupId>
+    <artifactId>MybatisProject2</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>mybatis-1-simple-start</module>
+        <module>mybatis-2-1-mybatis-config-with-java-xml</module>
+        <module>mybatis-2-2-mybatis-crud-with-java-xml</module>
+        <module>mybatis-2-3-parameters</module>
+        <module>mybatis-2-4-resultmap</module>
+        <module>mybatis-3-2-dynamic-sql-if-where</module>
+        <module>mybatis-3-1-dynamic-sql-set-if</module>
+        <module>mybatis-3-3-dynamic-sql-foreach</module>
+        <module>mybatis-3-4-dynamic-sql-trim</module>
+        <module>mybatis-3-5-dynamic-sql-choose</module>
+        <module>mybatis-3-6-dynamic-sql-bind</module>
+        <module>mybatis-4-1-1-auto-increase-jdbc</module>
+        <module>mybatis-4-1-2-auto-increase-selectKey</module>
+        <module>mybatis-4-2-databaseIdProvider</module>
+        <module>mybatis-4-3-mapping-one-to-one</module>
+        <module>mybatis-4-4-mapping-one-to-more</module>
+        <module>mybatis-4-5-mapping-more-to-more</module>
+        <module>mybatis-4-6-discriminator</module>
+        <module>mybatis-4-7-TypeHandler</module>
+        <module>mybatis-7-1-mybatis-config-properties</module>
+        <module>mybatis-3-7-OGNL</module>
+        <module>mybatis-4-8-page-selected</module>
+        <module>mybatis-5-1-cache-first</module>
+        <module>mybatis-5-2-cache-second</module>
+        <module>mybatis-5-3-third-party-EhCache</module>
+        <module>mybatis-5-4-third-party-Redis</module>
+        <module>mybatis-5-5-dirty-data</module>
+        <module>mybatis-8-1-mybatis-spring</module>
+        <module>mybatis-8-2-mybatis-springboot</module>
+    </modules>
+
+    <properties>
+        <java.version>8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.10</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.29</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>
