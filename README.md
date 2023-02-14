@@ -133,19 +133,297 @@ public interface ActorDAO{
 
 理论上无论哪种常见，`@Param`都是最通用的方法。
 
+注意这里介绍的都是`#{}`里面可以写的合法内容。
+
+下面介绍的部分写法代码可以参考：
+
+> src/main/java/cn/argentoaskia/dao/FilmTextDAOParameter.java
+>
+> src/main/resources/cn/argentoaskia/dao/FilmTextDAOParameter.xml
+
 #### 单参数 + 字面类型
 
-这种传递形式前面有介绍过，
+这种传递形式前面有介绍过，这里直接给出`DAO`接口和`Mapper`以及可用的参数传递方法。
+
+```java
+public interface FilmTextDAOParameter {
+
+    FilmTextOrigin2 selectById(Integer id);
+}
+```
+
+- 写法`1`：写参数名
+
+```xml
+<select id="selectById" resultType="cn.argentoaskia.beans.FilmTextOrigin2">
+    SELECT film_id, title, description
+    FROM film_text
+    WHERE film_id = #{id}
+</select>
+```
+
+- 写法`2`：任何东西都可以，因为参数只有一个，肯定会匹配上的
+
+```xml
+<select id="selectById" resultType="cn.argentoaskia.beans.FilmTextOrigin2">
+    SELECT film_id, title, description
+    FROM film_text
+    WHERE film_id = #{123}
+</select>
+```
+
+- 写法`3`：使用`_parameter`（`?`，后期测试中这种方法存疑）
+
+```xml
+<select id="selectById" resultType="cn.argentoaskia.beans.FilmTextOrigin2">
+    SELECT film_id, title, description
+    FROM film_text
+    WHERE film_id = #{_parameter}
+</select>
+```
+
+- 写法`4`：使用`@Param`注解
+
+```java
+public interface FilmTextDAOParameter {
+
+    FilmTextOrigin2 selectById(@Param("filmId") Integer id);
+}
+```
+
+```xml
+<select id="selectById" resultType="cn.argentoaskia.beans.FilmTextOrigin2">
+    SELECT film_id, title, description
+    FROM film_text
+    WHERE film_id = #{filmId}
+</select>
+```
 
 #### 单参数 +  引用类型
 
+```java
+public interface FilmTextDAOParameter {
+
+    Integer insert(FilmTextOrigin2 filmTextOrigin2);
+}
+```
+
+```java
+public class FilmTextOrigin2 {
+
+    private Integer film_id;
+    private String title;
+    private String description;
+    // 省略其他Setter和Getter
+}
+```
+
+- 写法`1`：可以直接写引用类型的属性名：
+
+```xml
+<insert id="insert">
+    INSERT INTO film_text
+    VALUES(#{film_id}, #{title}, #{description})
+</insert>
+```
+
+- 写法2：如果习惯了`对象名.属性名`的写法，则需要指定`parameterType`，同时这种方法需要给参数加上`@Param`重命名：
+
+```xml
+<insert id="insert3" parameterType="cn.argentoaskia.beans.FilmTextOrigin2">
+    INSERT INTO film_text
+    VALUES(#{filmTextOrigin2.film_id}, #{filmTextOrigin2.title}, #{filmTextOrigin2.description})
+</insert>
+```
+
+```java
+public interface FilmTextDAOParameter {
+
+    Integer insert(@Param("filmTextOrigin2") FilmTextOrigin2 filmTextOrigin2);
+}
+```
+
 #### 单参数 + map
+
+```java
+public interface FilmTextDAOParameter {
+
+    Integer insert2(Map<String, Object> params);
+}
+```
+
+- 写法`1`：可以直接使用`map`的`key`作为占位，如下面的`Map`，`Mapper`对应其`key`
+
+```java
+HashMap<String, Object> params = new HashMap<>();
+params.put("id", 1001);
+params.put("title", "insert test");
+params.put("desc", "desc test");
+Integer changeRow = mapper.insert2(params);
+```
+
+```xml
+<insert id="insert2">
+   INSERT INTO film_text
+   VALUES(#{id}, #{title}, #{desc})
+</insert>
+```
 
 #### 多参数 + 字面类型 + 字面类型
 
+```java
+public interface FilmTextDAOParameter {
+
+    Integer delete(Integer id,
+                   String title,
+                   String description);
+}
+```
+
+- 写法`1`：可以直接使用`@Param`注解进行命名，然后在`Mapper`中直接引用：
+
+```java
+public interface FilmTextDAOParameter {
+
+    Integer delete(@Param("id") Integer id,
+                   @Param("title") String title,
+                   @Param("desc") String description);
+}
+```
+
+```xml
+<delete id="delete">
+    DELETE FROM film_text
+    WHERE film_id = #{id} AND title = #{title} AND description = #{desc}
+</delete>
+```
+
+- 写法`2`：采用`paramX`命名，其中`X`代表数字，从`1`开始，代表第一个参数：
+
+```xml
+<delete id="delete2">
+    DELETE FROM film_text
+    WHERE film_id = #{param1} AND title = #{param2} AND description = #{param3}
+</delete>
+```
+
+- 写法`3`：采用`argx`命名，其中`X`代表数字，从`0`开始，代表第一个参数：
+
+```xml
+<delete id="delete3">
+    DELETE FROM film_text
+    WHERE film_id = #{arg0} AND title = #{arg1} AND description = #{arg2}
+</delete>
+```
+
 #### 多参数 + 字面类型 + 引用类型或map
+
+同多参数 + 字面类型 + 字面类型，但是要注意引用类型的参数需要采用`#{参数名.属性名}`写法，Map则是`#{参数名.键名}`，如：
+
+```java
+public interface FilmTextDAOParameter {
+    Integer update5(Integer filmId, FilmTextOrigin2 newObject);
+}            
+```
+
+```xml
+<update id="update5">
+    UPDATE film_text
+    SET film_id = #{arg1.film_id},
+        title = #{arg1.title},
+        description = #{arg1.description}
+    WHERE film_id = #{arg0}
+</update>
+```
+
+```xml
+<update id="update5">
+    UPDATE film_text
+    SET film_id = #{param2.film_id},
+        title = #{param2.title},
+        description = #{param2.description}
+    WHERE film_id = #{param1}
+</update>
+```
+
+或者使用`@Param`：
+
+```java
+public interface FilmTextDAOParameter {
+    Integer update5(@Param("filmId") Integer filmId, 
+    				@Param("newObject") FilmTextOrigin2 newObject);
+}  
+```
+
+```xml
+<update id="update5">
+    UPDATE film_text
+    SET film_id = #{newObject.film_id},
+        title = #{newObject.title},
+        description = #{newObject.description}
+    WHERE film_id = #{filmId}
+</update>
+```
 
 #### 多参数 + 引用类型 + 引用类型
 
+同多参数 + 字面类型 + 引用类型或map，参数需要指定具体的`#{参数名.属性名}`，如：
+
+```java
+public interface FilmTextDAOParameter {
+	Integer update(FilmTextOrigin2 ref, FilmTextOrigin2 newObj);
+    Integer update2(FilmTextOrigin2 ref, FilmTextOrigin2 newObj);
+    Integer update3(@Param("ref") FilmTextOrigin2 ref,
+                    @Param("newObj") FilmTextOrigin2 newObj);
+}
+```
+
+```xml
+<update id="update">
+    UPDATE film_text
+    SET film_id = #{param2.film_id},
+        title = #{param2.title},
+        description = #{param2.description}
+    WHERE film_id = #{param1.film_id}
+</update>
+
+<update id="update2">
+    UPDATE film_text
+    SET film_id = #{arg1.film_id},
+        title = #{arg1.title},
+        description = #{arg1.description}
+    WHERE film_id = #{arg0.film_id}
+</update>
+
+<update id="update3">
+    UPDATE film_text
+    SET film_id = #{newObj.film_id},
+        title = #{newObj.title},
+        description = #{newObj.description}
+    WHERE film_id = #{ref.film_id}
+</update>
+```
+
+ 
+
 #### 多参数 + 引用类型 + map
+
+同上，`Map`也是写`#{参数名.键名}`就好，这里只贴出一种推荐的写法，如：
+
+```java
+public interface FilmTextDAOParameter {
+    Integer update4(@Param("ref") Map<String, Object> ref,
+                    @Param("newObj") FilmTextOrigin2 newObj);
+}
+```
+
+```xml
+<update id="update4">
+    UPDATE film_text
+    SET film_id = #{newObj.film_id},
+        title = #{newObj.title},
+        description = #{newObj.description}
+    WHERE film_id = #{ref.id}
+</update>
+```
 
